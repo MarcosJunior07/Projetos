@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="grid">
+  <div class="card">
+    <h2>Clientes ativos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Compra</th>
+          <th>Status</th>
+          <th>Último envio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.purchase_date }}</td>
+          <td>{{ customer.status }}</td>
+          <td>{{ customer.last_sent_at or "-" }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">Nenhum cliente cadastrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Mensagens programadas</h2>
+    <ul class="list">
+      {% for message in messages %}
+      <li>
+        <strong>Dia {{ message.day_offset + 1 }}:</strong>
+        <span>{{ message.body }}</span>
+      </li>
+      {% else %}
+      <li>Nenhuma mensagem cadastrada.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Logs recentes</h2>
+    <ul class="list">
+      {% for log in logs %}
+      <li>
+        <strong>{{ log.event }}</strong>
+        <span>{{ log.detail }}</span>
+        <em>{{ log.created_at }}</em>
+      </li>
+      {% else %}
+      <li>Nenhum log recente.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}
